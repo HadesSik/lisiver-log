@@ -8,7 +8,7 @@ import filterPublishedPosts from './filterPublishedPosts'
 /**
  * @param {{ includePages: boolean }} - false: posts only / true: include pages
  */
-export async function getAllPosts ({ includePages = false }) {
+export async function getAllPosts({ includePages = false }) {
   let id = BLOG.notionPageId
   const authToken = BLOG.notionAccessToken || null
   const api = new NotionAPI({ authToken })
@@ -39,7 +39,7 @@ export async function getAllPosts ({ includePages = false }) {
 
       // Add fullwidth, createdtime to properties
       properties.createdTime = new Date(
-        block[id].value?.created_time
+        block[id].value?.created_time,
       ).toString()
       properties.fullWidth = block[id].value?.format?.page_full_width ?? false
 

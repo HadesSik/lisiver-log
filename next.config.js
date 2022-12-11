@@ -1,3 +1,5 @@
+const Dotenv = require('dotenv-webpack')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -16,6 +18,11 @@ const nextConfig = {
       // For example labelFormat: "my-classname--[local]", where [local] will be replaced with the name of the variable the result is assigned to.
       labelFormat: '[local]',
     },
+  },
+  webpack: (config) => {
+    config.plugins.push(new Dotenv({ silent: true }))
+
+    return config
   },
 }
 
