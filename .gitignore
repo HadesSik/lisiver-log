@@ -10,3 +10,7 @@
 
 ### next ###
 .next
+
+### dotenv ###
+.env*
+!.env.example

@@ -3,7 +3,7 @@ import { idToUuid } from 'notion-utils'
 import getAllPageIds from './getAllPageIds'
 import getPageProperties from './getPageProperties'
 import filterPublishedPosts from './filterPublishedPosts'
-import { ENV } from '@modules/config'
+import { ENV, NOTION } from '@modules/config'
 
 /**
  * @param {{ includePages: boolean }} - false: posts only / true: include pages
@@ -27,7 +27,7 @@ export async function getAllPosts({ includePages = false }) {
     rawMetadata?.type !== 'collection_view_page' &&
     rawMetadata?.type !== 'collection_view'
   ) {
-    console.log(`pageId "${id}" is not a database`)
+    console.error(`pageId "${id}" is not a database`)
     return null
   } else {
     // Construct Data
@@ -51,7 +51,7 @@ export async function getAllPosts({ includePages = false }) {
     const posts = filterPublishedPosts({ posts: data, includePages })
 
     // Sort by date
-    if (ENV.SORT_BY_DATE) {
+    if (NOTION.sortByDate) {
       posts.sort((a: any, b: any) => {
         const dateA = new Date(a?.date?.start_date || a.createdTime)
         const dateB = new Date(b?.date?.start_date || b.createdTime)

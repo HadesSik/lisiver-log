@@ -25,7 +25,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/modules/notion/getAllPosts.js"
+    "src/modules/notion/getAllPosts.ts"
   ],
   "exclude": ["node_modules"]
 }
