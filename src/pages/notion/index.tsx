@@ -1,43 +1,50 @@
 import { NOTION } from '@modules/config'
 import { postsInit } from '@modules/indexedDb'
 import { getAllPosts } from '@modules/notion'
-import { NextPage } from 'next'
+import { GetServerSideProps, GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import { Post } from 'types/notion'
 
-export const getStaticProps = async () => {
-  const posts = await getAllPosts({ includePages: false })
-  const postsToShow = posts.slice(0, NOTION.postsPerPage)
-  const totalPosts = posts.length
-  const showNext = totalPosts > NOTION.postsPerPage
+interface CustomNextPage {
+  posts: Post[]
+}
+
+export const getServerSideProps: GetServerSideProps<
+  CustomNextPage
+> = async () => {
+  const posts = await getAllPosts({ includePages: true })
+
   return {
     props: {
-      page: 1, // current page is 1
-      postsToShow,
-      showNext,
+      posts,
     },
-    revalidate: 1,
   }
 }
 
-const NotionPage: NextPage<any> = ({ postsToShow, page, showNext }) => {
-  postsInit(postsToShow)
+const NotionPage: NextPage<CustomNextPage> = ({ posts }) => {
+  useEffect(() => {
+    postsInit(posts)
+  }, [posts])
 
   return (
     <div title={NOTION.title} data-description={NOTION.description}>
       <div>title: {NOTION.title}</div>
       <div>description: {NOTION.description}</div>
-      <div>page: {page}</div>
-      <div>showNext: {showNext}</div>
       <div>
         <div>posts(JSON)</div>
-        <pre>{JSON.stringify(postsToShow, null, 2)}</pre>
+        <pre>{JSON.stringify(posts, null, 2)}</pre>
       </div>
       <div>
         <div>posts(go to detail)</div>
-        {postsToShow.map((post: Post) => (
-          <Link key={`post-${post.id}`} href={`/notion/detail/${post.id}`}>
-            [{post.id}] {post.title} - {post.createdTime}
+        {posts.map((post: Post) => (
+          <Link
+            key={`post-${post.id}`}
+            href={`/notion/${post.slug}?id=${post.id}`}
+          >
+            <div>
+              [{post.slug}] {post.title} - {post.createdTime}
+            </div>
           </Link>
         ))}
       </div>

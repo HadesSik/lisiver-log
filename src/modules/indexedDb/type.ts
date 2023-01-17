@@ -1,15 +1,12 @@
 import { DBSchema } from 'idb'
+import { Post } from 'types/notion'
 
 export interface MyDB extends DBSchema {
   notion: {
-    value: {
-      id: string
-      slug: string
-      title: string
-    }
+    value: Post
     key: string
     indexes: {
-      'by-slug': number
+      'by-slug': Post['slug']
     }
   }
 }

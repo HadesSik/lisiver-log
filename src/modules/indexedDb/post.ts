@@ -6,11 +6,7 @@ export const postsInit = async (posts: Post[]) => {
 
   await Promise.all(
     posts.map(async (post) => {
-      return await db.put('notion', {
-        id: post.id,
-        slug: post.slug,
-        title: post.title,
-      })
+      return await db.put('notion', post)
     }),
   )
 }
