@@ -1,4 +1,5 @@
 import { NOTION } from '@modules/config'
+import { postsInit } from '@modules/indexedDb'
 import { getAllPosts } from '@modules/notion'
 import { NextPage } from 'next'
 import Link from 'next/link'
@@ -20,6 +21,8 @@ export const getStaticProps = async () => {
 }
 
 const NotionPage: NextPage<any> = ({ postsToShow, page, showNext }) => {
+  postsInit(postsToShow)
+
   return (
     <div title={NOTION.title} data-description={NOTION.description}>
       <div>title: {NOTION.title}</div>
