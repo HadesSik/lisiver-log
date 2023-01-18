@@ -1,8 +1,10 @@
 import { NOTION } from '@modules/config'
 import { getAllPosts, getPostBlocks } from '@modules/notion'
 import { GetServerSideProps, NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { ExtendedRecordMap } from 'notion-types'
 import { ParsedUrlQuery } from 'querystring'
+import { useEffect } from 'react'
 import { NotionRenderer } from 'react-notion-x'
 import { Code } from 'react-notion-x/build/third-party/code'
 import { Collection } from 'react-notion-x/build/third-party/collection'
@@ -53,6 +55,20 @@ export const getServerSideProps: GetServerSideProps<
 }
 
 const NotionSlugPage: NextPage<CustomNextPage> = ({ postId, blockMap }) => {
+  const router = useRouter()
+
+  const cleanUpQuery = () => {
+    const slug = router.query.slug
+    router.replace(`/notion/${slug}`, undefined, { shallow: true })
+  }
+
+  useEffect(() => {
+    const queryId = router.query?.['id']
+    if (queryId) {
+      cleanUpQuery()
+    }
+  }, [router.query])
+
   return (
     <div title={NOTION.title} data-description={NOTION.description}>
       <div>postId: {postId}</div>
@@ -60,7 +76,9 @@ const NotionSlugPage: NextPage<CustomNextPage> = ({ postId, blockMap }) => {
       <div>description: {NOTION.description}</div>
       <div>
         <div>blockMap(JSON)</div>
-        <pre>{JSON.stringify(blockMap, null, 2)}</pre>
+        <pre style={{ maxHeight: 300, overflow: 'hidden' }}>
+          {JSON.stringify(blockMap, null, 2)}
+        </pre>
       </div>
       <div>
         <div>blockMapRender</div>
@@ -73,6 +91,7 @@ const NotionSlugPage: NextPage<CustomNextPage> = ({ postId, blockMap }) => {
               Collection,
             }}
             mapPageUrl={mapPageUrl}
+            darkMode={true}
           />
         )}
       </div>

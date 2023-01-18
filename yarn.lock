@@ -2867,6 +2867,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "lisiver-log@workspace:."
   dependencies:
+    "@babel/runtime": ^7.20.7
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
     "@types/node": 18.11.10

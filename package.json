@@ -21,6 +21,7 @@
     "react-notion-x": "^6.15.7"
   },
   "devDependencies": {
+    "@babel/runtime": "^7.20.7",
     "@types/node": "18.11.10",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
