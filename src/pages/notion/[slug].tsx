@@ -1,5 +1,9 @@
 import { NOTION } from '@modules/config'
-import { getAllPosts, getPostBlocks } from '@modules/notion'
+import {
+  getAllPosts,
+  getPostBlocks,
+  parsePageDataFromBlock,
+} from '@modules/notion'
 import { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { ExtendedRecordMap } from 'notion-types'
@@ -13,6 +17,7 @@ import { Post } from 'types/notion'
 
 interface CustomNextPage {
   postId?: string
+  title?: string
   blockMap?: ExtendedRecordMap
 }
 
@@ -40,10 +45,12 @@ export const getServerSideProps: GetServerSideProps<
     }
 
     const blockMap = await getPostBlocks(postId)
+    const pageInfo = parsePageDataFromBlock(blockMap)
 
     return {
       props: {
         postId,
+        title: pageInfo.title,
         blockMap,
       },
     }
@@ -54,7 +61,11 @@ export const getServerSideProps: GetServerSideProps<
   }
 }
 
-const NotionSlugPage: NextPage<CustomNextPage> = ({ postId, blockMap }) => {
+const NotionSlugPage: NextPage<CustomNextPage> = ({
+  postId,
+  title,
+  blockMap,
+}) => {
   const router = useRouter()
 
   const cleanUpQuery = () => {
@@ -81,7 +92,11 @@ const NotionSlugPage: NextPage<CustomNextPage> = ({ postId, blockMap }) => {
         </pre>
       </div>
       <div>
-        <div>blockMapRender</div>
+        <div className="notion-page">
+          <h1 className="font-bold text-3xl text-black dark:text-white">
+            {title}
+          </h1>
+        </div>
         {blockMap && (
           <NotionRenderer
             recordMap={blockMap}
