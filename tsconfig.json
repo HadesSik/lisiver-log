@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "downlevelIteration": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "noUnusedLocals": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -24,7 +26,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/modules/notion/getAllPosts.js"
+    "src/modules/notion/getAllPosts.ts"
   ],
   "exclude": ["node_modules"]
 }
