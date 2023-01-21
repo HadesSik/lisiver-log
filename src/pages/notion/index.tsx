@@ -1,7 +1,7 @@
 import { NOTION } from '@modules/config'
 import { postsInit } from '@modules/indexedDb'
 import { getAllPosts } from '@modules/notion'
-import { GetServerSideProps, GetStaticProps, NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { Post } from 'types/notion'
