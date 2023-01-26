@@ -7,6 +7,7 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "jsxImportSource": "@emotion/react",
     "noEmit": true,
     "noUnusedLocals": true,
     "esModuleInterop": true,
@@ -26,7 +27,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/modules/notion/getAllPosts.ts"
+    "additional.d.ts",
+    "emotion.d.ts"
   ],
   "exclude": ["node_modules"]
 }

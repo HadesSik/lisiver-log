@@ -10,6 +10,19 @@ import 'prismjs/themes/prism-tomorrow.css'
 // used for rendering equations (optional)
 import 'katex/dist/katex.min.css'
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import GlobalStyle from '@styles/GlobalStyle'
+import { ColorModeProvider } from '@styles/ColorModeProvider'
+import ThemeProvider from '@styles/ThemeProvider'
+
+const App = ({ Component, pageProps }: AppProps) => {
+  return (
+    <ColorModeProvider>
+      <ThemeProvider>
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </ColorModeProvider>
+  )
 }
+
+export default App
