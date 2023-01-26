@@ -1,6 +1,8 @@
 import { NOTION } from '@modules/config'
 import { postsInit } from '@modules/indexedDb'
 import { getAllPosts } from '@modules/notion'
+import { useColorModeContext } from '@styles/ColorModeProvider'
+import useToggleTheme from 'hooks/useToggleTheme'
 import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 import { useEffect } from 'react'
@@ -23,12 +25,22 @@ export const getServerSideProps: GetServerSideProps<
 }
 
 const NotionPage: NextPage<CustomNextPage> = ({ posts }) => {
+  const { toggleTheme } = useToggleTheme()
+
   useEffect(() => {
     postsInit(posts)
   }, [posts])
 
   return (
     <div title={NOTION.title} data-description={NOTION.description}>
+      <button
+        type="button"
+        onClick={() => {
+          toggleTheme()
+        }}
+      >
+        test toggle theme
+      </button>
       <div>title: {NOTION.title}</div>
       <div>description: {NOTION.description}</div>
       <div>

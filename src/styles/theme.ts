@@ -1,20 +1,53 @@
-import { Theme as EmotionTheme } from '@emotion/react'
+import { Theme } from '@emotion/react'
 
 export type ThemeMode = 'light' | 'dark'
 
-export const light: EmotionTheme = {
-  bgColor: '#ffffff',
-  fontColor: '#00000',
+const lightTheme: Theme = {
+  mode: 'light',
+  textColor: 'black',
+  backgroundColor: '#fafafa',
+  borderColor: '#eaeaea',
+  bodyColor: 'white',
 }
 
-export const dark: EmotionTheme = {
-  bgColor: '#000000',
-  fontColor: '#eeeeee',
+const darkTheme: Theme = {
+  mode: 'dark',
+  textColor: 'white',
+  backgroundColor: '#111',
+  borderColor: '#222',
+  bodyColor: 'black',
 }
 
-const Theme = {
-  light,
-  dark,
+const COLOR_MODE_KEY = 'color-mode'
+const INITIAL_COLOR_MODE_CSS_PROP = '--initial-color-mode'
+
+const themeProperties = {
+  'mode-color': {
+    light: lightTheme.mode,
+    dark: darkTheme.mode,
+  },
+  'text-color': {
+    light: lightTheme.textColor,
+    dark: darkTheme.textColor,
+  },
+  'background-color': {
+    light: lightTheme.backgroundColor,
+    dark: darkTheme.backgroundColor,
+  },
+  'border-color': {
+    light: lightTheme.borderColor,
+    dark: darkTheme.borderColor,
+  },
+  'body-color': {
+    light: lightTheme.bodyColor,
+    dark: darkTheme.bodyColor,
+  },
 }
 
-export default Theme
+export {
+  lightTheme,
+  darkTheme,
+  themeProperties,
+  COLOR_MODE_KEY,
+  INITIAL_COLOR_MODE_CSS_PROP,
+}

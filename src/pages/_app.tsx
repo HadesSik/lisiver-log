@@ -10,27 +10,18 @@ import 'prismjs/themes/prism-tomorrow.css'
 // used for rendering equations (optional)
 import 'katex/dist/katex.min.css'
 
-import { Global, ThemeProvider } from '@emotion/react'
-import { useTheme } from 'hooks'
-import THEME from '@styles/theme'
 import GlobalStyle from '@styles/GlobalStyle'
+import { ColorModeProvider } from '@styles/ColorModeProvider'
+import ThemeProvider from '@styles/ThemeProvider'
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const [theme, toggleTheme] = useTheme()
-
   return (
-    <ThemeProvider theme={THEME[theme]}>
-      <Global styles={GlobalStyle(THEME[theme])} />
-      <button
-        type="button"
-        onClick={() => {
-          toggleTheme()
-        }}
-      >
-        testForTheme
-      </button>
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <ColorModeProvider>
+      <ThemeProvider>
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </ColorModeProvider>
   )
 }
 
